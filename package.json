@@ -28,7 +28,7 @@
     "md5": "^2.2.1",
     "mocha": "^3.4.2",
     "pg": "^6.4.0",
-    "validate-nlf": "file:///Users/zanerussell/turing/mod-4/validate-nlf"
+    "validate-nlf": "./validate-nlf"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

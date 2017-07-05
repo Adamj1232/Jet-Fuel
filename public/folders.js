@@ -1,3 +1,4 @@
+/*jshint expr:true*/
 const addFolderTitle = document.getElementById('add-folder-title')
 const addFolderButton = document.getElementById('add-folder-button')
 const selectedFolder = document.getElementById('selected-folder')

@@ -1,3 +1,4 @@
+/*jshint expr:true*/
 const whatYearIsIt = document.getElementById("what-year-is-it")
 const stylin = document.getElementById("stylin")
 const filterByDate = document.getElementById("filter-by-date")

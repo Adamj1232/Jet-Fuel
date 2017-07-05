@@ -1,3 +1,4 @@
+/*jshint expr:true*/
 const addUrlAddress = document.getElementById("add-url-address")
 const addUrlButton = document.getElementById("add-url-button")
 const host = window.location.href
