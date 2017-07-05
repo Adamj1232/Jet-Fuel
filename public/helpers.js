@@ -1,11 +1,11 @@
-const whatYearIsIt = document.getElementById('what-year-is-it')
-const stylin = document.getElementById('stylin')
-const filterByDate = document.getElementById('filter-by-date')
-const filterByVisits = document.getElementById('filter-by-visits')
-const urlInput = document.getElementById('add-url-address')
-const filterDateArrow = document.getElementById('date-arrow')
-const filterClicksArrow = document.getElementById('clicks-arrow')
-const selectedFolderTag = document.getElementById('selected-folder')
+const whatYearIsIt = document.getElementById("what-year-is-it")
+const stylin = document.getElementById("stylin")
+const filterByDate = document.getElementById("filter-by-date")
+const filterByVisits = document.getElementById("filter-by-visits")
+const urlInput = document.getElementById("add-url-address")
+const filterDateArrow = document.getElementById("date-arrow")
+const filterClicksArrow = document.getElementById("clicks-arrow")
+const selectedFolderTag = document.getElementById("selected-folder")
 
 let filteredDate = false
 let filteredClicks = false
@@ -13,21 +13,22 @@ let filteredClicks = false
 function deleteIdea(e, div, deleteType, folderName){
   const id = e.path[1].id
   deleteDiv = document.getElementById(div.id)
-  let fetchUrl = ''
+  let fetchUrl = ""
 
-  if(deleteType == 'folder') {
+  if(deleteType == "folder") {
     const removeFolder = folderArray.indexOf(folderName)
 
     folderArray.splice(removeFolder, 1)
 
-    selectedFolderTag.innerHTML = 'Please Add or Select a Folder to Create a Shortened Link Within'
-    selectedFolderTitle.setAttribute('style', 'visibility: hidden')
+    selectedFolderTag.innerHTML = "Please Add or Select a Folder to Create a Shortened Link Within"
+    selectedFolderTitle.setAttribute("style", "visibility: hidden")
   }
 
-  deleteType === 'url' ?
+  if(deleteType === "url") {
     fetchUrl = `/api/v1/links/${id}`
-    :
+  } else {
     fetchUrl = `/api/v1/links/folder/${folderName}`
+  }
 
   fetch(fetchUrl, {
     method: "DELETE",
@@ -37,8 +38,8 @@ function deleteIdea(e, div, deleteType, folderName){
     loadLinks()
   })
   div.parentNode.removeChild(deleteDiv)
-  if(deleteType == 'folder'){
-    setTimeout(function(){ selectedFolderTag.innerHTML  = 'Please Add or Select a Folder to Create a Shortened Link Within' }, 10)
+  if(deleteType == "folder"){
+    setTimeout(function(){ selectedFolderTag.innerHTML  = "Please Add or Select a Folder to Create a Shortened Link Within" }, 10)
   }
 }
 
@@ -48,36 +49,36 @@ function sortLinks(sortType) {
   })
 }
 
-filterByDate.addEventListener('click', () => {
+filterByDate.addEventListener("click", () => {
   if(selectedFolder.innerText !== "Please Add or Select a Folder to Create a Shortened Link Within"){
     if(filteredDate === false){
-      filterDateArrow.setAttribute('class', 'fa fa-sort fa-sort-up'),
-      filterClicksArrow.setAttribute('class', 'fa fa-sort'),
+      filterDateArrow.setAttribute("class", "fa fa-sort fa-sort-up"),
+      filterClicksArrow.setAttribute("class", "fa fa-sort"),
+      sortLinks("updated_at")
       filteredDate = true
-      sortLinks('updated_at')
     } else {
       filteredDate = false
       storedLinks.reverse(),
-      filterDateArrow.setAttribute('class', 'fa fa-sort fa-sort-down')
+      filterDateArrow.setAttribute("class", "fa fa-sort fa-sort-down")
     }
 
     listLinks()
   }
 })
 
-// urlInput.addEventListener('focus', function(){
-//   document.getElementById('add-url-address').value = 'http://'
+// urlInput.addEventListener("focus", function(){
+//   document.getElementById("add-url-address").value = "http://"
 // })
 
-filterByVisits.addEventListener('click', () => {
+filterByVisits.addEventListener("click", () => {
   if(selectedFolder.innerText !== "Please Add or Select a Folder to Create a Shortened Link Within"){
     if(filteredClicks === false) {
-      filterClicksArrow.setAttribute('class', 'fa fa-sort fa-sort-up'),
-      filterDateArrow.setAttribute('class', 'fa fa-sort'),
+      filterClicksArrow.setAttribute("class", "fa fa-sort fa-sort-up"),
+      filterDateArrow.setAttribute("class", "fa fa-sort"),
       filteredClicks = true,
-      sortLinks('clicks')
+      sortLinks("clicks")
     } else {
-      filterClicksArrow.setAttribute('class', 'fa fa-sort fa-sort-down'),
+      filterClicksArrow.setAttribute("class", "fa fa-sort fa-sort-down"),
       filteredClicks = false,
       storedLinks.reverse()
     }
@@ -86,10 +87,10 @@ filterByVisits.addEventListener('click', () => {
 })
 
 
-whatYearIsIt.addEventListener('click', () => {
-  if(stylin.getAttribute('href') === 'main.css') {
-    stylin.setAttribute('href', 'real.css')
-  } else if (stylin.getAttribute('href') === 'real.css') {
-    stylin.setAttribute('href', 'main.css')
+whatYearIsIt.addEventListener("click", () => {
+  if(stylin.getAttribute("href") === "main.css") {
+    stylin.setAttribute("href", "real.css")
+  } else if (stylin.getAttribute("href") === "real.css") {
+    stylin.setAttribute("href", "main.css")
   }
 })
