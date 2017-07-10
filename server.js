@@ -84,7 +84,7 @@ app.post('/api/v1/links', (req, res) => {
     .then((newLink) => {
       res.status(201).json(newLink)
     })
-    .catch(error => {
+    .catch(() => {
       res.status(500).send({ error: 'what the hell are you doing?'})
     })
 })
@@ -102,7 +102,7 @@ app.get('/api/v1/links/click/:id', (req, res) => {
     .then((longLink) => {
       res.json(longLink)
     })
-    .catch((error) => {
+    .catch(() => {
       res.sendStatus(500)
     })
 })
@@ -113,7 +113,7 @@ app.delete('/api/v1/links/folder/:folder', (req, res) => {
     .then(() => {
       res.sendStatus(200)
     })
-    .catch(error => {
+    .catch(() => {
       res.sendStatus(500)
     })
 })
@@ -124,7 +124,7 @@ app.delete('/api/v1/links/:id', (req, res) => {
     .then(() => {
       res.sendStatus(200)
     })
-    .catch(error => {
+    .catch(() => {
       res.sendStatus(500)
     })
 })

@@ -1,3 +1,4 @@
+/*jshint expr:true*/
 const addFolderTitle = document.getElementById('add-folder-title')
 const addFolderButton = document.getElementById('add-folder-button')
 const selectedFolder = document.getElementById('selected-folder')
@@ -7,40 +8,32 @@ const selectedFolderTitle = document.getElementById('selected-folder-title')
 const folderArray = []
 let idCounter = 0
 
-addFolderButton.addEventListener('click', () => {
-  evaluateFolder()
-})
-
-function evaluateFolder() {
-  if(addFolderTitle.value &&
-    folderArray.indexOf(addFolderTitle.value) === -1) {
-
-    createFolder(addFolderTitle.value, 'new')
-    selectedFolder.innerText = addFolderTitle.value
-    addFolderTitle.value = ''
-    selectedFolderTitle.setAttribute('style', 'visibility: visible')
-  } else {
-    selectedFolder.innerText = 'Folder Already Exists'
+function selectedFolderStyle(nameOfSelectedFolder){
+  const folderElements = document.getElementsByClassName('folder-name')
+  for (var i = 0; i < folderElements.length; i++) {
+    if( folderElements[i].innerText === nameOfSelectedFolder.innerText ){
+      folderElements[i].parentNode.parentNode.setAttribute('class', 'selected new-folder')
+    } else {
+      folderElements[i].parentNode.parentNode.setAttribute('class', 'new-folder')
+    }
   }
 }
 
-function folderCheck(folderTitle) {
-  if(!folderTitle) {
-    return selectedFolder.innerText
-  } else{
-    evaluateFolder()
-    return folderTitle
-  }
-}
+function selectExistingFolder(location, folderType) {
 
-function parseInfo(storedLinks) {
-  if(storedLinks.length) {
-    storedLinks.forEach(link => {
-      if(folderArray.indexOf(link.folder) === -1){
-        createFolder(link.folder, 'existing')
-      }
-    })
+  let nameOfSelectedFolder
+  if(folderType === 'newFolder'){
+    nameOfSelectedFolder = location
+  } else  {
+    nameOfSelectedFolder = location.children[0].firstChild
   }
+
+  selectedFolderTitle.setAttribute('style', 'visibility: visible')
+  selectedFolder.innerText = nameOfSelectedFolder.innerText
+
+  selectedFolderStyle(nameOfSelectedFolder)
+  listLinks()
+  filteredByDate = ''
 }
 
 function createFolder(title, type) {
@@ -91,30 +84,38 @@ function createFolder(title, type) {
   }
 }
 
-function selectedFolderStyle(nameOfSelectedFolder){
-  const folderElements = document.getElementsByClassName('folder-name')
-  for (var i = 0; i < folderElements.length; i++) {
-    if( folderElements[i].innerText === nameOfSelectedFolder.innerText ){
-      folderElements[i].parentNode.parentNode.setAttribute('class', 'selected new-folder')
-    } else {
-      folderElements[i].parentNode.parentNode.setAttribute('class', 'new-folder')
-    }
+function evaluateFolder() {
+  if(addFolderTitle.value &&
+    folderArray.indexOf(addFolderTitle.value) === -1) {
+
+    createFolder(addFolderTitle.value, 'new')
+    selectedFolder.innerText = addFolderTitle.value
+    addFolderTitle.value = ''
+    selectedFolderTitle.setAttribute('style', 'visibility: visible')
+  } else {
+    selectedFolder.innerText = 'Folder Already Exists'
   }
 }
 
-function selectExistingFolder(location, folderType) {
+addFolderButton.addEventListener('click', () => {
+  evaluateFolder()
+})
 
-  let nameOfSelectedFolder
-  if(folderType === 'newFolder'){
-    nameOfSelectedFolder = location
-  } else  {
-    nameOfSelectedFolder = location.children[0].firstChild
+function folderCheck(folderTitle) {
+  if(!folderTitle) {
+    return selectedFolder.innerText
+  } else{
+    evaluateFolder()
+    return folderTitle
   }
+}
 
-  selectedFolderTitle.setAttribute('style', 'visibility: visible')
-  selectedFolder.innerText = nameOfSelectedFolder.innerText
-
-  selectedFolderStyle(nameOfSelectedFolder)
-  listLinks()
-  filteredByDate = ''
+function parseInfo(storedLinks) {
+  if(storedLinks.length) {
+    storedLinks.forEach(link => {
+      if(folderArray.indexOf(link.folder) === -1){
+        createFolder(link.folder, 'existing')
+      }
+    })
+  }
 }
