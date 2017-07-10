@@ -5,6 +5,16 @@ const host = window.location.href
 
 let storedLinks = []
 
+let address = window.location.href + ''
+
+function checkAddress(address){
+  if(address.indexOf('http://' == 0) {
+    window.location.href = address.replace('http://', 'https://');
+  });
+}
+
+checkAddress(address)
+
 // links have format
 // {url: "",
 // name: "",
